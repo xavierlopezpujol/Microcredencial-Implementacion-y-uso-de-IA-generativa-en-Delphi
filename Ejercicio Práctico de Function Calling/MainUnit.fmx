@@ -1,0 +1,136 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Chat App'
+  ClientHeight = 600
+  ClientWidth = 412
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object LayoutMain: TLayout
+    Align = Client
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 10.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 10.000000000000000000
+    Size.Width = 392.000000000000000000
+    Size.Height = 580.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object LayoutChat: TLayout
+      Align = Client
+      Margins.Bottom = 60.000000000000000000
+      Size.Width = 392.000000000000000000
+      Size.Height = 460.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object ScrollBoxChat: TScrollBox
+        Align = Client
+        Size.Width = 392.000000000000000000
+        Size.Height = 460.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Viewport.Width = 392.000000000000000000
+        Viewport.Height = 460.000000000000000000
+      end
+    end
+    object LayoutInput: TLayout
+      Align = Bottom
+      Margins.Top = 10.000000000000000000
+      Position.Y = 530.000000000000000000
+      Size.Width = 392.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object LayoutInputControls: TLayout
+        Align = Client
+        Size.Width = 392.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object ButtonSend: TButton
+          Align = Right
+          Position.X = 322.000000000000000000
+          Size.Width = 70.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'arrowrighttoolbutton'
+          TabOrder = 1
+          Text = 'Send'
+          TextSettings.Trimming = None
+          OnClick = ButtonSendClick
+        end
+        object mmoPrompt: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          Align = Client
+          Size.Width = 322.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Viewport.Width = 318.000000000000000000
+          Viewport.Height = 46.000000000000000000
+        end
+      end
+    end
+  end
+  object AiConn: TAiChatConnection
+    DriverName = 'Ollama'
+    Params.Strings = (
+      'ApiKey=@OLLAMA_API_KEY'
+      'Model=llama3'
+      'MaxTokens=4096'
+      'TopP=1.0'
+      'TopK=5'
+      'BaseURL=http://localhost:11434/'
+      'Max_Tokens=4096'
+      'NativeInputFiles=[]'
+      'NativeOutupFiles=[]'
+      'ChatMediaSupports=[]'
+      'Tool_Active=False')
+    AiFunctions = AiFunctions1
+    Prompt_tokens = 0
+    Completion_tokens = 0
+    Total_tokens = 0
+    Left = 32
+    Top = 40
+  end
+  object AiFunctions1: TAiFunctions
+    Functions = <
+      item
+        FunctionName = 'ObtenerInfoSistema'
+        OnAction = AiFunctions1Functions0GetFechayHoraAction
+        Description.Strings = (
+          'Provide the system information')
+        Parameters = <>
+        Default = False
+        Tag = 0
+        ToolType = tt_function
+      end
+      item
+        FunctionName = 'CalculaFibonacci'
+        OnAction = AiFunctions1Functions1CalculaFibonacciAction
+        Description.Strings = (
+          
+            'Calcular la serie de fibonacci desde hasta el numero proporciona' +
+            'do.'
+          'Calculate fibonacci series from number provided')
+        Parameters = <
+          item
+            Name = 'Param1'
+            ParamType = ptInteger
+            Description.Strings = (
+              'integer to calculate fibonacci series')
+            Required = True
+          end>
+        Default = False
+        Tag = 0
+        ToolType = tt_function
+      end>
+    Left = 106
+    Top = 42
+  end
+end
